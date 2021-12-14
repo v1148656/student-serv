@@ -19,9 +19,9 @@ import telran.b7a.student.service.StudentService;
 
 @RestController
 public class StudentController {
-	
+
 	StudentService studentService;
-	
+
 	@Autowired
 	public StudentController(StudentService studentService) {
 		this.studentService = studentService;
@@ -48,13 +48,22 @@ public class StudentController {
 	}
 
 	@PutMapping("/score/student/{id}")
-	public boolean addScore(@PathVariable Integer id,@RequestBody ScoreDto scoreDto) {
+	public boolean addScore(@PathVariable Integer id, @RequestBody ScoreDto scoreDto) {
 		return studentService.addScore(id, scoreDto);
 	}
-	
+
 	@GetMapping("/students/name/{name}")
 	public List<StudentDto> findStudentsByName(@PathVariable String name) {
 		return studentService.findStudentsByName(name);
 	}
 
+	@PostMapping("/quantity/students")
+	public long studentsNamesQuantity(@RequestBody List<String> names) {
+		return studentService.getStudentsNamesQuantity(names);
+	}
+
+	@GetMapping("/students/exam/{exam}/minscore/{score}")
+	public List<StudentDto> studentsByExamScore(@PathVariable String exam, @PathVariable int score) {
+		return studentService.getStudentsByExamScore(exam, score);
+	}
 }
